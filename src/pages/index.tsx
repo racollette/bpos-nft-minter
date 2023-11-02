@@ -5,6 +5,7 @@ import Image from "next/image";
 import { api } from "~/utils/api";
 import ImageSpinner from "~/components/Spinner";
 import { Profile } from "~/components/Profile";
+import { MintNFT } from "~/components/Mint";
 
 export default function Home() {
   return (
@@ -20,6 +21,9 @@ export default function Home() {
           <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
             Elastos <span className="text-[hsl(280,100%,70%)]">BPoS</span> NFT
           </h1>
+        </div>
+        <div className="flex h-full w-full flex-row items-center justify-center">
+          <MintNFT />
         </div>
         {/* <div className="flex flex-row">
           <Image

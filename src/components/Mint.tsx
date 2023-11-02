@@ -11,17 +11,38 @@ export function MintNFT() {
     error: prepareError,
     isError: isPrepareError,
   } = usePrepareContractWrite({
-    address: "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
+    address: "0xE3443516C9fb60b15241869A3F52231fbe634143",
     abi: [
       {
-        name: "mint",
+        name: "mintNFT",
         type: "function",
         stateMutability: "nonpayable",
-        inputs: [],
-        outputs: [],
+        inputs: [
+          {
+            internalType: "address",
+            name: "recipient",
+            type: "address",
+          },
+          {
+            internalType: "string",
+            name: "tokenURI",
+            type: "string",
+          },
+        ],
+        outputs: [
+          {
+            internalType: "uint256",
+            name: "",
+            type: "uint256",
+          },
+        ],
       },
     ],
-    functionName: "mint",
+    functionName: "mintNFT",
+    args: [
+      "0x2a63619B9a8707d83Cd2BCF61384864dD281DD76",
+      "https://gateway.pinata.cloud/ipfs/QmYueiuRNmL4MiA2GwtVMm6ZagknXnSpQnB3z2gWbz36hP",
+    ],
   });
   const { data, error, isError, write } = useContractWrite(config);
 
@@ -30,8 +51,12 @@ export function MintNFT() {
   });
 
   return (
-    <div>
-      <button disabled={!write || isLoading} onClick={() => write()}>
+    <div className="flex flex-row items-center justify-center">
+      <button
+        className="rounded-lg bg-green-500 p-4 text-white"
+        disabled={!write || isLoading}
+        onClick={() => write()}
+      >
         {isLoading ? "Minting..." : "Mint"}
       </button>
       {isSuccess && (
@@ -43,7 +68,9 @@ export function MintNFT() {
         </div>
       )}
       {(isPrepareError || isError) && (
-        <div>Error: {(prepareError || error)?.message}</div>
+        <div className="text-white">
+          Error: {(prepareError ?? error)?.message}
+        </div>
       )}
     </div>
   );
