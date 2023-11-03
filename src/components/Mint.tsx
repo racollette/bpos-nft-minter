@@ -1,11 +1,19 @@
 import * as React from "react";
+import { useEffect, useRef } from "react";
 import {
   usePrepareContractWrite,
   useContractWrite,
   useWaitForTransaction,
 } from "wagmi";
 
-export function MintNFT() {
+type MintNFTProps = {
+  handleSpin: () => void;
+  spinning: boolean;
+  connected: boolean;
+  spinState: number;
+};
+
+export function MintNFT({ handleSpin, spinning, connected }: MintNFTProps) {
   const {
     config,
     error: prepareError,
@@ -50,16 +58,33 @@ export function MintNFT() {
     hash: data?.hash,
   });
 
+  // Create a ref to track whether isSuccess has changed
+  const isFirstSuccess = useRef(true);
+
+  useEffect(() => {
+    if (isSuccess && isFirstSuccess.current) {
+      isFirstSuccess.current = false; // Set it to false for subsequent renders
+      handleSpin();
+    }
+  }, [isSuccess, handleSpin]);
+
+  const handleMintClick = () => {
+    if (!write || isLoading || spinning || !connected) return;
+    write();
+    // You can add code here to reset the ref if needed
+    isFirstSuccess.current = true; // Set the ref back to true
+  };
+
   return (
-    <div className="flex flex-row items-center justify-center">
+    <div className="flex w-full flex-row items-center justify-center">
       <button
-        className="rounded-lg bg-green-500 p-4 text-white"
-        disabled={!write || isLoading}
-        onClick={() => write()}
+        className="text-md h-14 w-1/4 rounded-lg bg-fuchsia-600 font-bold text-white hover:bg-fuchsia-500 disabled:cursor-not-allowed"
+        disabled={!write || isLoading || spinning || !connected}
+        onClick={() => handleMintClick()}
       >
         {isLoading ? "Minting..." : "Mint"}
       </button>
-      {isSuccess && (
+      {/* {isSuccess && (
         <div>
           Successfully minted your NFT!
           <div>
@@ -71,7 +96,7 @@ export function MintNFT() {
         <div className="text-white">
           Error: {(prepareError ?? error)?.message}
         </div>
-      )}
+      )} */}
     </div>
   );
 }
