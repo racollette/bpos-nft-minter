@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useBlockNumber } from "wagmi";
@@ -73,16 +75,16 @@ const Spinner: React.FC = () => {
   //console.log(spinState);
   //console.log(type);
 
-  useEffect(() => {
-    const spinnerWidth = spinnerRef.current?.clientWidth;
-    // console.log(spinnerWidth);
-    const containerWidth = containerRef.current?.clientWidth;
-    // console.log(containerWidth);
+  // useEffect(() => {
+  //   const spinnerWidth = spinnerRef.current?.clientWidth;
+  //   // console.log(spinnerWidth);
+  //   const containerWidth = containerRef.current?.clientWidth;
+  //   // console.log(containerWidth);
 
-    // const
-    // const imagesFromStart = containerWidth && containerWidth / 2 / imageWidth;
-    // console.log(imagesFromStart);
-  }, [spin]);
+  //   // const
+  //   // const imagesFromStart = containerWidth && containerWidth / 2 / imageWidth;
+  //   // console.log(imagesFromStart);
+  // }, [spin]);
 
   // console.log(spinnerImages);
 
@@ -115,15 +117,17 @@ const Spinner: React.FC = () => {
           //   style={{ animation: "carousel-spin-1 10 linear infinite" }}
         >
           {spinnerImages.map((image, index) => (
-            <div key={index} className="group relative h-[316px] w-[316px]">
+            <div
+              className="group relative mx-0.5 h-[316px] w-[316px]"
+              key={index}
+            >
               <Image
                 src={image}
                 alt={`Image ${index}`}
-                width={316}
-                height={316}
-                className={`mx-0.5 transition-opacity ${
-                  index === currentIndex ? "opacity-100" : "opacity-100"
-                }`}
+                // width={316}
+                // height={316}
+                // className={`mx-0.05 group relative`}
+                fill
               />
               <div className="absolute left-0 top-0 flex h-full w-full transform flex-col items-center justify-center gap-2 bg-black bg-opacity-80 text-white opacity-0 transition-opacity duration-500 group-hover:opacity-100">
                 <h1 className="text-xl font-extrabold">
