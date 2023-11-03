@@ -5,9 +5,9 @@ import { MintNFT } from "~/components/Mint";
 import { useNetwork } from "wagmi"; // Import the useNetwork hook
 
 const images = [
-  "/NFT1_AuXPoW.png",
-  "/NFT2_BPoS.png",
-  "/NFT3_PoI.png",
+  "/images/NFT1_AuXPoW.png",
+  "/images/NFT2_BPoS.png",
+  "/images/NFT3_PoI.png",
   // Add more image paths as needed
 ];
 
