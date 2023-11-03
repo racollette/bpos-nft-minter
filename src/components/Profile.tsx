@@ -1,6 +1,7 @@
 import { useAccount, useConnect, useDisconnect } from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
 import { AiOutlineDisconnect } from "react-icons/ai";
+import { useNetwork } from "wagmi"; // Import the useNetwork hook
 
 export function Profile() {
   const { address, isConnected } = useAccount();
@@ -9,7 +10,18 @@ export function Profile() {
   });
   const { disconnect } = useDisconnect();
 
-  if (isConnected)
+  // Use the useNetwork hook to get chain information
+  const { chain } = useNetwork();
+
+  if (isConnected) {
+    if (chain && chain.id !== 20) {
+      return (
+        <div className="text-red-500">
+          Please switch to the Elastos Smart Chain
+        </div>
+      );
+    }
+
     return (
       <div className="flex flex-row items-center justify-center gap-2">
         <button
@@ -21,6 +33,8 @@ export function Profile() {
         </button>
       </div>
     );
+  }
+
   return (
     <button
       className="rounded-md bg-fuchsia-500 p-2 font-bold text-white"
