@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useBlockNumber } from "wagmi";
@@ -77,16 +75,16 @@ const Spinner: React.FC = () => {
 
   useEffect(() => {
     const spinnerWidth = spinnerRef.current?.clientWidth;
-    console.log(spinnerWidth);
+    // console.log(spinnerWidth);
     const containerWidth = containerRef.current?.clientWidth;
-    console.log(containerWidth);
+    // console.log(containerWidth);
 
     // const
     // const imagesFromStart = containerWidth && containerWidth / 2 / imageWidth;
     // console.log(imagesFromStart);
   }, [spin]);
 
-  console.log(spinnerImages);
+  // console.log(spinnerImages);
 
   return (
     <div

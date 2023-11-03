@@ -40,32 +40,13 @@ export default function Home() {
                 an added benefit.
               </AccordionContent>
             </AccordionItem>
-            <AccordionItem value="item-2" className="border-none text-white">
+            {/* <AccordionItem value="item-2" className="border-none text-white">
               <AccordionTrigger>Is it accessible?</AccordionTrigger>
               <AccordionContent>
                 Yes. It adheres to the WAI-ARIA design pattern.
               </AccordionContent>
-            </AccordionItem>
+            </AccordionItem> */}
           </Accordion>
-
-          <p>
-            Elastos’ Elastic Consensus, including its novel variable Bonded
-            Proof of Stake consensus, is up and running with new upgrades to the
-            blockchain infrastructure recently implemented. Now we are looking
-            to further decentralize our network by encouraging potential node
-            operators and DeFi users to consider ELA as a lucrative and secure
-            place to stake for rewards. This effort coincides with the recent
-            partnership with Staking Rewards in the leadup to Elastos’
-            participation in Staking Summit scheduled for November 10th-11th.
-            Elastos holds 2 attendee passes for this event, and our objective is
-            to promote and recruit new BPoS Validators for the Elastic
-            Consensus, a unique opportunity to engage with a highly relevant
-            audience. To mark the occasion, Elastos has also commissioned three
-            unique NFTs each representing a different aspect of the Elastic
-            Consensus (AuxPoW, BPoS and PoI) and each with a unique benefit for
-            the Elastos ecosystem. When combined, you get the full picture and
-            an added benefit.
-          </p>
         </div>
         {/* <div className="flex h-full w-full flex-row items-center justify-center">
           <MintNFT />
