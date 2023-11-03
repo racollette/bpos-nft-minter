@@ -1,38 +1,36 @@
-import { type Config } from "tailwindcss";
-import { fontFamily } from "tailwindcss/defaultTheme";
-
-export default {
-  content: ["./src/**/*.tsx"],
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  darkMode: ["class"],
+  content: [
+    './pages/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx}',
+    './src/**/*.{ts,tsx}',
+	],
   theme: {
-    extend: {
-      fontFamily: {
-        sans: ["var(--font-sans)", ...fontFamily.sans],
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
       },
+    },
+    extend: {
       keyframes: {
-        "carousel-spin-1": {
-          "0%": { transform: "translateX(0px)" },
-          "100%": { transform: "translateX(-11700px)" },
+        "accordion-down": {
+          from: { height: 0 },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
-        "carousel-spin-2": {
-          "0%": { transform: "translateX(0px)" },
-          "100%": { transform: "translateX(-14016px)" },
-        },
-        "carousel-spin-3": {
-          "0%": { transform: "translateX(0px)" },
-          "100%": { transform: "translateX(-16043px)" },
-        },
-        wiggle: {
-          "0%, 100%": { transform: "rotate(-3deg)" },
-          "50%": { transform: "rotate(3deg)" },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: 0 },
         },
       },
       animation: {
-        "carousel-spin-1": "carousel-spin-1 10s ease-out",
-        "carousel-spin-2": "carousel-spin-2 10s ease-out",
-        "carousel-spin-3": "carousel-spin-3 10s ease-out",
-        wiggle: "wiggle 1s ease-in-out infinite",
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
   },
-  plugins: [],
-} satisfies Config;
+  plugins: [require("tailwindcss-animate")],
+}
