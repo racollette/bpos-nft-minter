@@ -4,22 +4,31 @@ import {
   usePrepareContractWrite,
   useContractWrite,
   useWaitForTransaction,
+  useAccount,
 } from "wagmi";
+import { nftType } from "./Spinner";
+import { parseEther } from "ethers";
 
 type MintNFTProps = {
   handleSpin: () => void;
   spinning: boolean;
   connected: boolean;
-  spinState: number;
+  spinState: 1 | 2 | 3;
 };
 
-export function MintNFT({ handleSpin, spinning, connected }: MintNFTProps) {
+export function MintNFT({
+  handleSpin,
+  spinning,
+  connected,
+  spinState,
+}: MintNFTProps) {
+  const { address } = useAccount();
   const {
     config,
     error: prepareError,
     isError: isPrepareError,
   } = usePrepareContractWrite({
-    address: "0xE3443516C9fb60b15241869A3F52231fbe634143",
+    address: `0x${nftType[spinState].address}`,
     abi: [
       {
         name: "mintNFT",
@@ -48,10 +57,12 @@ export function MintNFT({ handleSpin, spinning, connected }: MintNFTProps) {
     ],
     functionName: "mintNFT",
     args: [
-      "0x2a63619B9a8707d83Cd2BCF61384864dD281DD76",
-      "https://gateway.pinata.cloud/ipfs/QmYueiuRNmL4MiA2GwtVMm6ZagknXnSpQnB3z2gWbz36hP",
+      address,
+      `https://gateway.pinata.cloud/ipfs/${nftType[spinState].ipfs}`,
     ],
+    value: parseEther("0.02"),
   });
+
   const { data, error, isError, write } = useContractWrite(config);
 
   const { isLoading, isSuccess } = useWaitForTransaction({
@@ -78,7 +89,7 @@ export function MintNFT({ handleSpin, spinning, connected }: MintNFTProps) {
   return (
     <div className="flex w-full flex-row items-center justify-center">
       <button
-        className="text-md h-14 w-1/4 rounded-lg bg-fuchsia-600 font-bold text-white hover:bg-fuchsia-500 disabled:cursor-not-allowed"
+        className="text-md w-[200px] rounded-md bg-fuchsia-600 p-2 font-bold text-white hover:bg-fuchsia-500 disabled:cursor-not-allowed"
         disabled={!write || isLoading || spinning || !connected}
         onClick={() => handleMintClick()}
       >

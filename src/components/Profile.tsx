@@ -25,22 +25,24 @@ export function Profile() {
     return (
       <div className="flex flex-row items-center justify-center gap-2">
         <button
-          className="flex flex-row items-center justify-center gap-2 rounded-md bg-sky-400 p-2 font-bold text-white"
+          className="flex w-[200px] flex-row items-center justify-center gap-2 rounded-md bg-sky-400 p-2 font-bold text-white hover:bg-sky-500"
           onClick={() => disconnect()}
         >
           <div className="text-white">{address?.slice(0, 8)}</div>
-          <AiOutlineDisconnect size={20} />
+          <AiOutlineDisconnect size={24} />
         </button>
       </div>
     );
   }
 
   return (
-    <button
-      className="rounded-md bg-fuchsia-500 p-2 font-bold text-white"
-      onClick={() => connect()}
-    >
-      Connect Wallet
-    </button>
+    <div className="flex flex-row items-center justify-center gap-2">
+      <button
+        className="flex w-[200px] items-center justify-center rounded-md bg-sky-400 p-2 font-bold text-white hover:bg-sky-500"
+        onClick={() => connect()}
+      >
+        Connect Wallet
+      </button>
+    </div>
   );
 }

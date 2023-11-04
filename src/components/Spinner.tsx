@@ -2,9 +2,10 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { useBlockNumber } from "wagmi";
+import { useBlockNumber, useContractReads, useNetwork } from "wagmi";
 import { MintNFT } from "~/components/Mint";
-import { useNetwork } from "wagmi"; // Import the useNetwork hook
+import { Profile } from "~/components/Profile";
+import abi from "~/utils/abi.json";
 
 const images = [
   "/images/NFT1_AuXPoW.png",
@@ -25,15 +26,28 @@ const finalXTranslation = {
   3: 16043,
 };
 
-const nftType = {
-  1: { title: "Proof of Work", details: "Earn $GLIDE" },
+// QmYfxHFQoBsHbZs2KHBdLYLCd5SerBqMEEaiX7GmictT7R // PoI
+// QmRnsd2KQpNYsspjnA2F9qAdicMcuzrZMzSCMupCge4mkf // PoW
+// Qmem84KjqcQsgNTnDaxTdngc1hJ4me6TBS2U4VZHdw4pMK // BPoS
+
+export const nftType = {
+  1: {
+    title: "Proof of Work",
+    details: "Earn $GLIDE",
+    ipfs: "QmRnsd2KQpNYsspjnA2F9qAdicMcuzrZMzSCMupCge4mkf",
+    address: "0292c98C661eA81814488df43734340BdFC7D2f7",
+  },
   2: {
     title: "Proof of Stake",
     details: "50% discount on Elasafe (Elastos node service provider)",
+    ipfs: "Qmem84KjqcQsgNTnDaxTdngc1hJ4me6TBS2U4VZHdw4pMK",
+    address: "06093eBDd2f83cc56caF99A6b4cccf5E2848D619",
   },
   3: {
     title: "Proof of Integrity",
     details: "20% discount using Elacity Flint’s generative AI tools",
+    ipfs: "QmYfxHFQoBsHbZs2KHBdLYLCd5SerBqMEEaiX7GmictT7R",
+    address: "D3F17dD24EecC74961c69f61f53bE60795EDe436",
   },
 };
 
@@ -72,6 +86,48 @@ const Spinner: React.FC = () => {
     }, spinDuration);
   };
 
+  const mintedCountABI = [
+    {
+      inputs: [],
+      name: "totalMintedNFTs",
+      outputs: [
+        {
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
+      ],
+      stateMutability: "view",
+      type: "function",
+    },
+  ];
+
+  const {
+    data: mintedData,
+    isError: isMintedError,
+    isLoading: isMintedLoading,
+  } = useContractReads({
+    contracts: [
+      {
+        address: `0x${nftType[1].address}`,
+        abi: mintedCountABI,
+        functionName: "totalMintedNFTs",
+      },
+      {
+        address: `0x${nftType[2].address}`,
+        abi: mintedCountABI,
+        functionName: "totalMintedNFTs",
+      },
+      {
+        address: `0x${nftType[3].address}`,
+        abi: mintedCountABI,
+        functionName: "totalMintedNFTs",
+      },
+    ],
+  });
+
+  console.log(mintedData);
+
   //console.log(spinState);
   //console.log(type);
 
@@ -93,7 +149,8 @@ const Spinner: React.FC = () => {
       className="flex h-[500px] w-4/5 flex-col items-center gap-8 overflow-hidden"
       ref={containerRef}
     >
-      <div className="w-full">
+      <div className="flex justify-center gap-4">
+        <Profile />{" "}
         <MintNFT
           handleSpin={handleSpin}
           spinning={spin}
@@ -129,7 +186,7 @@ const Spinner: React.FC = () => {
                 // className={`mx-0.05 group relative`}
                 fill
               />
-              <div className="absolute left-0 top-0 flex h-full w-full transform flex-col items-center justify-center gap-2 bg-black bg-opacity-80 text-white opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+              <div className="absolute left-0 top-0 z-50 flex h-full w-full transform flex-col items-center justify-center gap-2 bg-black bg-opacity-80 text-white opacity-0 transition-opacity duration-500 group-hover:opacity-100">
                 <h1 className="text-xl font-extrabold">
                   {nftType[getNFTNumber(image)].title}
                 </h1>
@@ -137,11 +194,24 @@ const Spinner: React.FC = () => {
                   <span className="font-bold">Utility:&nbsp;</span>
                   {nftType[getNFTNumber(image)].details}
                 </p>
+                <p>
+                  <span className="font-bold">Minted:&nbsp;</span>
+                  <span>
+                    {mintedData && getNFTNumber(image) === 1
+                      ? String(mintedData[0]?.result)
+                      : mintedData && getNFTNumber(image) === 2
+                      ? String(mintedData[1]?.result)
+                      : mintedData && getNFTNumber(image) === 3
+                      ? String(mintedData[2]?.result)
+                      : 0}
+                    /88
+                  </span>
+                </p>
               </div>
             </div>
           ))}
         </div>
-        <div className="absolute left-1/2 -translate-x-1/2 transform text-center">
+        <div className="absolute left-1/2 z-0 -translate-x-1/2 transform text-center">
           <div className={`mx-1 h-[400px] w-2 bg-yellow-500`}></div>
         </div>
       </div>
