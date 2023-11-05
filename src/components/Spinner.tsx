@@ -86,21 +86,20 @@ const Spinner: React.FC = () => {
     }, spinDuration);
   };
 
-  const mintedCountABI = [
-    {
-      inputs: [],
-      name: "totalMintedNFTs",
-      outputs: [
-        {
-          internalType: "uint256",
-          name: "",
-          type: "uint256",
-        },
-      ],
-      stateMutability: "view",
-      type: "function",
-    },
-  ];
+  // const mintedCountABI = [
+  //   {
+  //     type: "function",
+  //     inputs: [],
+  //     name: "totalMintedNFTs",
+  //     outputs: [
+  //       {
+  //         type: "uint256",
+  //         name: "",
+  //       },
+  //     ],
+  //     stateMutability: "view",
+  //   },
+  // ];
 
   const {
     data: mintedData,
@@ -110,17 +109,17 @@ const Spinner: React.FC = () => {
     contracts: [
       {
         address: `0x${nftType[1].address}`,
-        abi: mintedCountABI,
+        // abi: abi,
         functionName: "totalMintedNFTs",
       },
       {
         address: `0x${nftType[2].address}`,
-        abi: mintedCountABI,
+        // abi: mintedCountABI,
         functionName: "totalMintedNFTs",
       },
       {
         address: `0x${nftType[3].address}`,
-        abi: mintedCountABI,
+        // abi: mintedCountABI,
         functionName: "totalMintedNFTs",
       },
     ],
@@ -194,19 +193,19 @@ const Spinner: React.FC = () => {
                   <span className="font-bold">Utility:&nbsp;</span>
                   {nftType[getNFTNumber(image)].details}
                 </p>
-                <p>
-                  <span className="font-bold">Minted:&nbsp;</span>
-                  <span>
-                    {mintedData && getNFTNumber(image) === 1
-                      ? String(mintedData[0]?.result)
-                      : mintedData && getNFTNumber(image) === 2
-                      ? String(mintedData[1]?.result)
-                      : mintedData && getNFTNumber(image) === 3
-                      ? String(mintedData[2]?.result)
-                      : 0}
-                    /88
-                  </span>
-                </p>
+                {!isLoading && !isError && mintedData && (
+                  <p>
+                    <span className="font-bold">Minted:&nbsp;</span>
+                    <span>
+                      {getNFTNumber(image) === 1
+                        ? String(mintedData[0]?.result)
+                        : getNFTNumber(image) === 2
+                        ? String(mintedData[1]?.result)
+                        : String(mintedData[2]?.result)}
+                      /88
+                    </span>
+                  </p>
+                )}
               </div>
             </div>
           ))}
