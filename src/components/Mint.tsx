@@ -1,72 +1,32 @@
+"use client";
+
 import * as React from "react";
-import { useEffect, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
-  usePrepareContractWrite,
-  useContractWrite,
   useWaitForTransaction,
-  useAccount,
+  // useAccount,
 } from "wagmi";
-import { nftType } from "./Spinner";
-import { parseEther } from "ethers";
+import { usePreparedContracts } from "~/utils/contracts";
 
 type MintNFTProps = {
-  handleSpin: () => void;
+  handleSpin: (randomNumber: 1 | 2 | 3) => void;
   spinning: boolean;
   connected: boolean;
-  spinState: 1 | 2 | 3;
 };
 
-export function MintNFT({
-  handleSpin,
-  spinning,
-  connected,
-  spinState,
-}: MintNFTProps) {
-  const { address } = useAccount();
-  const {
-    config,
-    error: prepareError,
-    isError: isPrepareError,
-  } = usePrepareContractWrite({
-    address: `0x${nftType[spinState].address}`,
-    abi: [
-      {
-        name: "mintNFT",
-        type: "function",
-        stateMutability: "nonpayable",
-        inputs: [
-          {
-            internalType: "address",
-            name: "recipient",
-            type: "address",
-          },
-          {
-            internalType: "string",
-            name: "tokenURI",
-            type: "string",
-          },
-        ],
-        outputs: [
-          {
-            internalType: "uint256",
-            name: "",
-            type: "uint256",
-          },
-        ],
-      },
-    ],
-    functionName: "mintNFT",
-    args: [
-      address,
-      `https://gateway.pinata.cloud/ipfs/${nftType[spinState].ipfs}`,
-    ],
-    value: parseEther("0.02"),
-  });
+export function MintNFT({ handleSpin, spinning, connected }: MintNFTProps) {
+  const [randomNumber, setRandomNumber] = useState<1 | 2 | 3>(1);
 
-  const { data, error, isError, write } = useContractWrite(config);
+  const { write1, data1, write2, data2, write3, data3 } =
+    usePreparedContracts();
 
   const { isLoading, isSuccess } = useWaitForTransaction({
-    hash: data?.hash,
+    hash:
+      randomNumber === 1
+        ? data1?.hash
+        : randomNumber === 2
+        ? data2?.hash
+        : data3?.hash,
   });
 
   // Create a ref to track whether isSuccess has changed
@@ -75,14 +35,23 @@ export function MintNFT({
   useEffect(() => {
     if (isSuccess && isFirstSuccess.current) {
       isFirstSuccess.current = false; // Set it to false for subsequent renders
-      handleSpin();
+      handleSpin(randomNumber);
     }
-  }, [isSuccess, handleSpin]);
+  }, [isSuccess, handleSpin, randomNumber]);
 
   const handleMintClick = () => {
-    if (!write || isLoading || spinning || !connected) return;
-    write();
-    // You can add code here to reset the ref if needed
+    const newRandomNumber = Math.ceil(Math.random() * 3) as 1 | 2 | 3;
+    setRandomNumber(newRandomNumber);
+
+    if (isLoading || spinning || !connected) return;
+
+    if (newRandomNumber === 1) {
+      write1 && write1();
+    } else if (newRandomNumber === 2) {
+      write2 && write2();
+    } else {
+      write3 && write3();
+    }
     isFirstSuccess.current = true; // Set the ref back to true
   };
 
@@ -90,7 +59,9 @@ export function MintNFT({
     <div className="flex w-full flex-row items-center justify-center">
       <button
         className="text-md w-[200px] rounded-md bg-fuchsia-600 p-2 font-bold text-white hover:bg-fuchsia-500 disabled:cursor-not-allowed"
-        disabled={!write || isLoading || spinning || !connected}
+        disabled={
+          !write1 || !write2 || !write3 || isLoading || spinning || !connected
+        }
         onClick={() => handleMintClick()}
       >
         {isLoading ? "Minting..." : "Mint"}

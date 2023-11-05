@@ -5,7 +5,9 @@ import Image from "next/image";
 import { useBlockNumber, useContractReads, useNetwork } from "wagmi";
 import { MintNFT } from "~/components/Mint";
 import { Profile } from "~/components/Profile";
-import abi from "~/utils/abi.json";
+import dynamic from "next/dynamic";
+
+const OverlayNoSSR = dynamic(() => import("./Overlay"), { ssr: false });
 
 const images = [
   "/images/NFT1_AuXPoW.png",
@@ -20,64 +22,51 @@ const spinnerImages = Array.from(
   () => [...images],
 ).flat();
 
-const finalXTranslation = {
-  1: 11700,
-  2: 14016,
-  3: 16043,
-};
-
-// QmYfxHFQoBsHbZs2KHBdLYLCd5SerBqMEEaiX7GmictT7R // PoI
-// QmRnsd2KQpNYsspjnA2F9qAdicMcuzrZMzSCMupCge4mkf // PoW
-// Qmem84KjqcQsgNTnDaxTdngc1hJ4me6TBS2U4VZHdw4pMK // BPoS
-
 export const nftType = {
   1: {
     title: "Proof of Work",
     details: "Earn $GLIDE",
     ipfs: "QmRnsd2KQpNYsspjnA2F9qAdicMcuzrZMzSCMupCge4mkf",
-    address: "0292c98C661eA81814488df43734340BdFC7D2f7",
+    address: "7C8bD2A803D933557741965205f21F7088311468",
+    translation: 11700,
   },
   2: {
     title: "Proof of Stake",
     details: "50% discount on Elasafe (Elastos node service provider)",
     ipfs: "Qmem84KjqcQsgNTnDaxTdngc1hJ4me6TBS2U4VZHdw4pMK",
-    address: "06093eBDd2f83cc56caF99A6b4cccf5E2848D619",
+    address: "fE712eC85326bB9E54637896abf2a646CD081e39",
+    translation: 14016,
   },
   3: {
     title: "Proof of Integrity",
     details: "20% discount using Elacity Flint’s generative AI tools",
     ipfs: "QmYfxHFQoBsHbZs2KHBdLYLCd5SerBqMEEaiX7GmictT7R",
-    address: "D3F17dD24EecC74961c69f61f53bE60795EDe436",
+    address: "a30ae22b56dE03E94B3773F50089B0A2A557F955",
+    translation: 16043,
   },
 };
 
-function getNFTNumber(url: string): 1 | 2 | 3 {
-  if (url.includes("PoW")) return 1;
-  if (url.includes("BPoS")) return 2;
-  return 3;
-}
-
 const Spinner: React.FC = () => {
   const { chain } = useNetwork();
-  const [currentIndex, setCurrentIndex] = useState(0);
+  // const [currentIndex, setCurrentIndex] = useState(0);
   const [spin, setSpin] = useState(false);
-  const [spinState, setSpinState] = useState<1 | 2 | 3>(1);
+  const [spinState, setSpinState] = useState<1 | 2 | 3>(2);
   const [type, setType] = useState<string>("");
   const spinnerRef = useRef<HTMLDivElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const spinDuration = 10000;
 
-  const { data, isError, isLoading } = useBlockNumber();
+  // const { data, isError, isLoading } = useBlockNumber();
 
-  const handleSpin = () => {
+  const handleSpin = (randomNumber: 1 | 2 | 3) => {
     // spinnerRef.current?.style.setProperty("transform", `translateX(-100px)`);
     setType("");
-    const randomNumber = Math.ceil(Math.random() * 3) as 1 | 2 | 3;
     setSpinState(randomNumber);
     setSpin(true);
+
     spinnerRef.current?.style.setProperty(
       "transform",
-      `translateX(-${finalXTranslation[randomNumber]}px)`,
+      `translateX(-${nftType[randomNumber].translation}px)`,
     );
 
     setTimeout(() => {
@@ -86,20 +75,20 @@ const Spinner: React.FC = () => {
     }, spinDuration);
   };
 
-  // const mintedCountABI = [
-  //   {
-  //     type: "function",
-  //     inputs: [],
-  //     name: "totalMintedNFTs",
-  //     outputs: [
-  //       {
-  //         type: "uint256",
-  //         name: "",
-  //       },
-  //     ],
-  //     stateMutability: "view",
-  //   },
-  // ];
+  const mintedCountABI = [
+    {
+      type: "function",
+      inputs: [],
+      name: "totalMintedNFTs",
+      outputs: [
+        {
+          type: "uint256",
+          name: "",
+        },
+      ],
+      stateMutability: "view",
+    },
+  ];
 
   const {
     data: mintedData,
@@ -109,39 +98,24 @@ const Spinner: React.FC = () => {
     contracts: [
       {
         address: `0x${nftType[1].address}`,
-        // abi: abi,
+        // @ts-expect-error unknown
+        abi: mintedCountABI,
         functionName: "totalMintedNFTs",
       },
       {
         address: `0x${nftType[2].address}`,
-        // abi: mintedCountABI,
+        // @ts-expect-error unknown
+        abi: mintedCountABI,
         functionName: "totalMintedNFTs",
       },
       {
         address: `0x${nftType[3].address}`,
-        // abi: mintedCountABI,
+        // @ts-expect-error unknown
+        abi: mintedCountABI,
         functionName: "totalMintedNFTs",
       },
     ],
   });
-
-  console.log(mintedData);
-
-  //console.log(spinState);
-  //console.log(type);
-
-  // useEffect(() => {
-  //   const spinnerWidth = spinnerRef.current?.clientWidth;
-  //   // console.log(spinnerWidth);
-  //   const containerWidth = containerRef.current?.clientWidth;
-  //   // console.log(containerWidth);
-
-  //   // const
-  //   // const imagesFromStart = containerWidth && containerWidth / 2 / imageWidth;
-  //   // console.log(imagesFromStart);
-  // }, [spin]);
-
-  // console.log(spinnerImages);
 
   return (
     <div
@@ -149,12 +123,11 @@ const Spinner: React.FC = () => {
       ref={containerRef}
     >
       <div className="flex justify-center gap-4">
-        <Profile />{" "}
+        <Profile />
         <MintNFT
           handleSpin={handleSpin}
           spinning={spin}
           connected={(chain && chain.id === 20) ?? false}
-          spinState={spinState}
         />
       </div>
 
@@ -185,28 +158,7 @@ const Spinner: React.FC = () => {
                 // className={`mx-0.05 group relative`}
                 fill
               />
-              <div className="absolute left-0 top-0 z-50 flex h-full w-full transform flex-col items-center justify-center gap-2 bg-black bg-opacity-80 text-white opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                <h1 className="text-xl font-extrabold">
-                  {nftType[getNFTNumber(image)].title}
-                </h1>
-                <p className="w-5/6 text-center">
-                  <span className="font-bold">Utility:&nbsp;</span>
-                  {nftType[getNFTNumber(image)].details}
-                </p>
-                {!isLoading && !isError && mintedData && (
-                  <p>
-                    <span className="font-bold">Minted:&nbsp;</span>
-                    <span>
-                      {getNFTNumber(image) === 1
-                        ? String(mintedData[0]?.result)
-                        : getNFTNumber(image) === 2
-                        ? String(mintedData[1]?.result)
-                        : String(mintedData[2]?.result)}
-                      /88
-                    </span>
-                  </p>
-                )}
-              </div>
+              <OverlayNoSSR image={image} mintedData={mintedData} />
             </div>
           ))}
         </div>
