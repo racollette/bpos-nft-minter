@@ -6,6 +6,7 @@ import { useBlockNumber, useContractReads, useNetwork } from "wagmi";
 import { MintNFT } from "~/components/Mint";
 import { Profile } from "~/components/Profile";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 
 const OverlayNoSSR = dynamic(() => import("./Overlay"), { ssr: false });
 
@@ -28,21 +29,21 @@ export const nftType = {
     details: "Earn $GLIDE",
     ipfs: "QmRnsd2KQpNYsspjnA2F9qAdicMcuzrZMzSCMupCge4mkf",
     address: "7C8bD2A803D933557741965205f21F7088311468",
-    translation: 11700,
+    translation: 11900,
   },
   2: {
     title: "Proof of Stake",
     details: "50% discount on Elasafe (Elastos node service provider)",
     ipfs: "Qmem84KjqcQsgNTnDaxTdngc1hJ4me6TBS2U4VZHdw4pMK",
     address: "fE712eC85326bB9E54637896abf2a646CD081e39",
-    translation: 14016,
+    translation: 14155,
   },
   3: {
     title: "Proof of Integrity",
     details: "20% discount using Elacity Flint’s generative AI tools",
     ipfs: "QmYfxHFQoBsHbZs2KHBdLYLCd5SerBqMEEaiX7GmictT7R",
     address: "a30ae22b56dE03E94B3773F50089B0A2A557F955",
-    translation: 16043,
+    translation: 15580,
   },
 };
 
@@ -119,7 +120,7 @@ const Spinner: React.FC = () => {
 
   return (
     <div
-      className="flex h-[500px] w-4/5 flex-col items-center gap-8 overflow-hidden"
+      className="flex h-[625px] w-4/5 flex-col items-center gap-8 overflow-hidden"
       ref={containerRef}
     >
       <div className="flex justify-center gap-4">
@@ -134,7 +135,7 @@ const Spinner: React.FC = () => {
       <div className="relative flex h-full w-full items-center justify-center overflow-hidden">
         <div
           ref={spinnerRef}
-          className={`flex items-center justify-center ${
+          className={`flex -translate-x-20 transform items-center justify-center ${
             spin && spinState === 1
               ? `animate-carousel-spin-1`
               : spin && spinState === 2
@@ -147,7 +148,9 @@ const Spinner: React.FC = () => {
         >
           {spinnerImages.map((image, index) => (
             <div
-              className="group relative mx-0.5 h-[316px] w-[316px]"
+              className={`group relative mx-0.5 h-[316px] w-[316px] ${
+                image.includes("PoW") && `ml-3`
+              } ${image.includes("PoI") && `mr-3`}`}
               key={index}
             >
               <Image
@@ -163,14 +166,32 @@ const Spinner: React.FC = () => {
           ))}
         </div>
         <div className="absolute left-1/2 z-0 -translate-x-1/2 transform text-center">
-          <div className={`mx-1 h-[400px] w-2 bg-yellow-500`}></div>
+          <div className={`mx-1 h-[500px] w-2 bg-yellow-500`}></div>
         </div>
       </div>
-      <div className="h-10">
+      <div className="mb-10 h-48">
         {type && (
-          <h1 className="text-xl font-extrabold text-white">
-            You minted a {type} NFT!
-          </h1>
+          <>
+            <h1 className="text-xl font-extrabold text-white">
+              You minted a {type} NFT!
+            </h1>
+            <div className="mt-2 text-lg text-white">
+              <Link
+                href="https://ela.city/"
+                target="_blank"
+                className="flex flex-row items-center justify-center gap-4 rounded-2xl bg-emerald-500 py-2 hover:bg-emerald-400"
+              >
+                <Image
+                  src="/images/elacity.jpg"
+                  width={50}
+                  height={50}
+                  alt="Ela.city"
+                  className="rounded-full"
+                />
+                <p className="text-xl font-semibold">Trade it on Ela.city!</p>
+              </Link>
+            </div>
+          </>
         )}
       </div>
     </div>
