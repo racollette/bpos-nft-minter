@@ -16,15 +16,18 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>BPoS NFT</title>
+        <title>Elastic Consensus NFT</title>
         <meta name="description" content="Celebrating Elastic Consensus" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className=" flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
-          <h1 className="text-3xl font-extrabold tracking-tight text-white sm:text-6xl">
-            Celebrating{" "}
-            <span className="text-[hsl(280,100%,70%)]">Elastic</span> Consensus
+          <h1 className="flex flex-row gap-4 text-3xl font-extrabold tracking-tight text-white md:text-5xl">
+            Celebrating
+            <span className="animate-bounce text-[hsl(280,100%,70%)]">
+              Elastic
+            </span>
+            Consensus
           </h1>
           <Accordion type="single" collapsible>
             <AccordionItem
