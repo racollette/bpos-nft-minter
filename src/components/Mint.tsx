@@ -80,14 +80,14 @@ export function MintNFT({ handleSpin, spinning, connected }: MintNFTProps) {
             "Mint"
           )}
         </AlertDialogTrigger>
-        <AlertDialogContent className="mx-4 w-5/6 border-none bg-indigo-800/80">
+        <AlertDialogContent className="mx-4 w-5/6 border-none bg-indigo-800/60">
           <AlertDialogHeader>
             <AlertDialogTitle className="font-semibold text-white">
-              Mint my NFT
+              Mint an NFT
             </AlertDialogTitle>
             <AlertDialogDescription className="text-white ">
-              The mint price is 20 ELA and you will receive one of the 3 NFTs at
-              random. Do you wish to proceed?
+              The mint price is <b>20</b> ELA and you will receive one of the 3
+              NFTs at random. Do you wish to proceed?
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
