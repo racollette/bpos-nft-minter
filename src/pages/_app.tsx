@@ -29,7 +29,6 @@ const config = createConfig({
       },
     }),
   ],
-  // @ts-expect-error I don't know
   publicClient: createPublicClient({
     chain: elastos,
     transport: http(),
