@@ -9,9 +9,27 @@ import "~/styles/globals.css";
 import { WagmiConfig, createConfig } from "wagmi";
 import { createPublicClient, http } from "viem";
 import { elastos } from "~/utils/config";
+import { InjectedConnector } from "wagmi/connectors/injected";
+import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
+// import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 
 const config = createConfig({
   autoConnect: true,
+  connectors: [
+    // new MetaMaskConnector(),
+    new InjectedConnector({
+      options: {
+        name: "Browser Wallet",
+      },
+    }),
+    new WalletConnectConnector({
+      chains: [elastos],
+      options: {
+        projectId: "02f588d124c1f0e3ab7981e8b5043840",
+      },
+    }),
+  ],
+  // @ts-expect-error I don't know
   publicClient: createPublicClient({
     chain: elastos,
     transport: http(),
