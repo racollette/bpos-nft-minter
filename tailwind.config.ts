@@ -16,18 +16,21 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        shadows: ["Shadows Into Light"],
+      },
       keyframes: {
         "carousel-spin-1": {
           "0%": { transform: "translateX(0px)" },
-          "100%": { transform: "translateX(-11700px)" },
+          "100%": { transform: "translateX(-11900px)" },
         },
         "carousel-spin-2": {
           "0%": { transform: "translateX(0px)" },
-          "100%": { transform: "translateX(-14016px)" },
+          "100%": { transform: "translateX(-14155px)" },
         },
         "carousel-spin-3": {
           "0%": { transform: "translateX(0px)" },
-          "100%": { transform: "translateX(-16043px)" },
+          "100%": { transform: "translateX(-15580px)" },
         },
         "accordion-down": {
           from: { height: 0 },
