@@ -28,15 +28,37 @@ export default function Home() {
         {/* Hero Image */}
         <div className="hero-image absolute left-0 top-0 w-full brightness-[0.35]">
           <Image
-            src="/images/Combined_NFT.png" // Update the path to your hero image
+            src="/images/Combined_NFT.png"
             alt="Elastic Consensus NFT"
-            width={1920} // Adjust the width to the image's width
-            height={400} // Adjust the height to the image's height
+            width={1920}
+            height={400}
+            className="hidden md:block"
           />
+          <Image
+            src="/images/NFT1_AuXPoW.png"
+            alt="Elastic Consensus NFT"
+            width={600}
+            height={600}
+            className="block md:hidden"
+          />
+          {/* <Image
+            src="/images/NFT2_BPoS.png"
+            alt="Elastic Consensus NFT"
+            width={400}
+            height={400}
+            className="block md:hidden"
+          />
+          <Image
+            src="/images/NFT3_PoI.png"
+            alt="Elastic Consensus NFT"
+            width={400}
+            height={400}
+            className="block md:hidden"
+          /> */}
         </div>
 
         <div className="container relative z-10 flex flex-col items-center justify-center gap-8 px-4 pb-8 pt-16">
-          <h1 className="font-shadows flex flex-row gap-2 text-3xl font-extrabold tracking-tight text-white md:text-6xl">
+          <h1 className="font-shadows flex flex-row gap-2 text-4xl font-extrabold tracking-tight text-white md:text-6xl">
             Celebrating
             <span className="animate-bounce text-[hsl(280,100%,70%)]">
               Elastic
@@ -62,7 +84,7 @@ export default function Home() {
           <Accordion type="single" collapsible>
             <AccordionItem
               value="item-1"
-              className="w-[500px] border-none text-white"
+              className="border-none text-white md:w-[500px]"
             >
               <AccordionTrigger className="text-semibold font-shadows text-xl">
                 What is this?
@@ -119,7 +141,7 @@ export default function Home() {
             </AccordionItem>
             <AccordionItem
               value="item-2"
-              className="w-[500px] border-none text-white"
+              className="border-none text-white md:w-[500px]"
             >
               <AccordionTrigger className="text-semibold font-shadows text-xl">
                 Why collect them all?
