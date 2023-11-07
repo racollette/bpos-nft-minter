@@ -8,6 +8,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "~/@/components/accordion";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -34,14 +35,30 @@ export default function Home() {
           />
         </div>
 
-        <div className="container relative z-10 flex flex-col items-center justify-center gap-12 px-4 pb-8 pt-16">
-          <h1 className="font-sa font-shadows flex flex-row gap-4 text-3xl font-extrabold tracking-tight text-white md:text-6xl">
+        <div className="container relative z-10 flex flex-col items-center justify-center gap-8 px-4 pb-8 pt-16">
+          <h1 className="font-shadows flex flex-row gap-2 text-3xl font-extrabold tracking-tight text-white md:text-6xl">
             Celebrating
             <span className="animate-bounce text-[hsl(280,100%,70%)]">
               Elastic
             </span>
             Consensus
           </h1>
+          <h2 className="font-shadows text-xl font-semibold text-white">
+            <Link
+              href="https://elastos.info"
+              target="_blank"
+              className="flex flex-row gap-2"
+            >
+              <span>Securing the</span>
+              <Image
+                src="/images/logo_no_background.png"
+                alt="Elastos"
+                width={24}
+                height={20}
+              />
+              <span>Elastos economy</span>
+            </Link>
+          </h2>
           <Accordion type="single" collapsible>
             <AccordionItem
               value="item-1"
@@ -52,12 +69,33 @@ export default function Home() {
               </AccordionTrigger>
               <AccordionContent>
                 <p>
-                  {`Elastos’ Elastic Consensus, including its novel variable Bonded
-                Proof of Stake implementation, is up and running!`}
+                  Elastos’{" "}
+                  <Link
+                    target="_blank"
+                    className="text-sky-500 underline"
+                    href="https://elastos.info/blog/now-is-a-good-time-to-be-a-validator-with-elastos-elastic-consensus/"
+                  >
+                    Elastic Consensus
+                  </Link>
+                  , including its novel variable Bonded Proof of Stake (BPosS)
+                  is up and running!
                 </p>
                 <br />
                 <p>
-                  {`To mark the occasion, Elastos has also commissioned three unique NFTs, each representing a different pillar of the Elastic Consensus. These include Auxiliary Proof of Work (AuxPoW, aka Bitcoin merge mining), Bonded Proof of Stake (BPoS) and Proof of Integrity (PoI, aka The Cyber Republic Council). Each NFT comes with a unique benefit within the Elastos ecosystem.`}
+                  To mark the occasion, Elastos has commissioned three unique
+                  NFTs, each representing a different pillar of the{" "}
+                  <Link
+                    target="_blank"
+                    className="text-sky-500 underline"
+                    href="https://elastos.info/blog/elastic-consensus-technical-overview/"
+                  >
+                    Elastic Consensus
+                  </Link>
+                  : Auxiliary Proof of Work (AuxPoW, aka Bitcoin merge mining),
+                  Bonded Proof of Stake (BPoS) and Proof of Integrity (PoI, aka
+                  The Cyber Republic Council). Each NFT comes with a unique
+                  benefit within the Elastos ecosystem. Collecting all three
+                  gives users even more benefits.
                 </p>
                 <div className="mt-2 flex flex-col gap-2">
                   <p className="font-semibold">
@@ -89,13 +127,22 @@ export default function Home() {
               <AccordionContent>
                 <div className="flex flex-col gap-2">
                   <p className="font-semibold">
-                    Completing the full picture by collecting one of each NFT
-                    comes with an added benefit!
+                    {`Elastos'`}{" "}
+                    <Link
+                      target="_blank"
+                      className="text-sky-500 underline"
+                      href="https://elastos.info/blog/blockchain-consensus-mechanisms-and-what-makes-elastos-unique/"
+                    >
+                      Elastic Consensus
+                    </Link>{" "}
+                    {`combines three powerful mechanisms that provide security,
+                    flexibility and transparency. By collecting and completing
+                    the full picture you'll unlock an additional benefit!`}
                   </p>
                   <p>
-                    Holders of all three NFTs receive the benefits of each
-                    (hover images to see utility) as well as the ability to earn
-                    some additional ELA.
+                    {`Holders of all three NFTs receive the benefits of each
+                    (hover over images to see their utility) as well as the
+                    ability to earn additional ELA.`}
                   </p>
                 </div>
               </AccordionContent>
