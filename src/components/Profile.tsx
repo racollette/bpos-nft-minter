@@ -2,7 +2,7 @@
 
 import { useAccount, useConnect, useDisconnect } from "wagmi";
 import { AiOutlineDisconnect } from "react-icons/ai";
-import { useNetwork } from "wagmi"; // Import the useNetwork hook
+import { useNetwork, useSwitchNetwork } from "wagmi"; // Import the useNetwork hook
 import {
   Dialog,
   DialogContent,
@@ -11,6 +11,7 @@ import {
   DialogTrigger,
 } from "~/@/components/dialog";
 import Image from "next/image";
+import { HiExclamationCircle } from "react-icons/hi";
 
 export function Profile() {
   const { address, connector: activeConnector, isConnected } = useAccount();
@@ -18,12 +19,19 @@ export function Profile() {
     useConnect();
   const { disconnect } = useDisconnect();
   const { chain } = useNetwork();
+  const { switchNetwork } = useSwitchNetwork();
 
   if (isConnected) {
     if (chain && chain.id !== 20) {
       return (
-        <div className="text-red-500">
-          Please switch to the Elastos Smart Chain
+        <div className="flex flex-row items-center justify-center gap-2">
+          <button
+            className="flex w-[200px] flex-row flex-nowrap items-center justify-center gap-2 rounded-md bg-pink-600 p-2 text-xs font-bold text-white hover:bg-pink-700"
+            onClick={() => switchNetwork?.(20)}
+          >
+            <HiExclamationCircle size={24} />
+            <div className="text-white">Switch to ESC</div>
+          </button>
         </div>
       );
     }
@@ -56,7 +64,7 @@ export function Profile() {
           <div className="flex flex-col gap-4 text-white md:flex-row">
             {connectors.map((connector) => (
               <button
-                className="flex flex-row items-center justify-center gap-2 rounded-md bg-indigo-800 p-2 text-sm font-extrabold"
+                className="flex flex-row items-center justify-center gap-2 rounded-md bg-indigo-900 p-2 text-sm font-extrabold"
                 disabled={!connector.ready}
                 key={connector.id}
                 onClick={() => connect({ connector })}
