@@ -123,7 +123,7 @@ const Spinner: React.FC = () => {
       className="flex h-[625px] w-full flex-col items-center gap-8 overflow-hidden md:w-4/5"
       ref={containerRef}
     >
-      <div className="flex flex-col justify-center  gap-4 md:flex-row">
+      <div className="flex flex-col justify-center gap-4 md:flex-row">
         <Profile />
         <MintNFT
           handleSpin={handleSpin}

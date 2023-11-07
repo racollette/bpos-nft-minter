@@ -68,64 +68,48 @@ export function MintNFT({ handleSpin, spinning, connected }: MintNFTProps) {
   };
 
   return (
-    <div className="flex w-full flex-row items-center justify-center">
-      <AlertDialog>
-        <AlertDialogTrigger className="flex w-[200px] items-center justify-center rounded-md bg-fuchsia-600 p-2 font-bold text-white hover:bg-fuchsia-500">
-          {isLoading ? (
-            <div className="flex flex-row items-center justify-center gap-2">
-              <HiRefresh size={20} className="animate-spin font-extrabold" />
-              Minting...
-            </div>
-          ) : (
-            "Mint"
-          )}
-        </AlertDialogTrigger>
-        <AlertDialogContent className="mx-4 w-5/6 border-none bg-indigo-800/60">
-          <AlertDialogHeader>
-            <AlertDialogTitle className="font-semibold text-white">
-              Mint an NFT
-            </AlertDialogTitle>
-            <AlertDialogDescription className="text-white ">
-              The mint price is <b>20</b> ELA and you will receive one of the 3
-              NFTs at random. Do you wish to proceed?
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel className="border-none bg-zinc-300 hover:bg-zinc-500">
-              Cancel
-            </AlertDialogCancel>
-            <AlertDialogAction
-              className="text-md rounded-md bg-fuchsia-600 p-2 font-bold text-white hover:bg-fuchsia-800 disabled:cursor-not-allowed md:w-[100px]"
-              disabled={
-                !write1 ||
-                !write2 ||
-                !write3 ||
-                isLoading ||
-                spinning ||
-                !connected
-              }
-              onClick={() => handleMintClick()}
-            >
-              Continue
-            </AlertDialogAction>
-          </AlertDialogFooter>
-          {/* <button className="rounded-md bg-black/40 p-2">Cancel</button> */}
-        </AlertDialogContent>
-      </AlertDialog>
-
-      {/* {isSuccess && (
-        <div>
-          Successfully minted your NFT!
-          <div>
-            <a href={`https://etherscan.io/tx/${data?.hash}`}>Etherscan</a>
+    <AlertDialog>
+      <AlertDialogTrigger className="flex w-[200px] items-center justify-center rounded-md bg-fuchsia-600 p-2 font-bold text-white hover:bg-fuchsia-500">
+        {isLoading ? (
+          <div className="flex flex-row items-center justify-center gap-2">
+            <HiRefresh size={20} className="animate-spin font-extrabold" />
+            Minting...
           </div>
-        </div>
-      )}
-      {(isPrepareError || isError) && (
-        <div className="text-white">
-          Error: {(prepareError ?? error)?.message}
-        </div>
-      )} */}
-    </div>
+        ) : (
+          "Mint"
+        )}
+      </AlertDialogTrigger>
+      <AlertDialogContent className="mx-4 w-5/6 border-none bg-indigo-800/60">
+        <AlertDialogHeader>
+          <AlertDialogTitle className="font-semibold text-white">
+            Mint an NFT
+          </AlertDialogTitle>
+          <AlertDialogDescription className="text-white ">
+            The mint price is <b>20</b> ELA and you will receive one of the 3
+            NFTs at random. Do you wish to proceed?
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel className="border-none bg-zinc-300 hover:bg-zinc-500">
+            Cancel
+          </AlertDialogCancel>
+          <AlertDialogAction
+            className="text-md rounded-md bg-fuchsia-600 p-2 font-bold text-white hover:bg-fuchsia-800 disabled:cursor-not-allowed md:w-[100px]"
+            disabled={
+              !write1 ||
+              !write2 ||
+              !write3 ||
+              isLoading ||
+              spinning ||
+              !connected
+            }
+            onClick={() => handleMintClick()}
+          >
+            Continue
+          </AlertDialogAction>
+        </AlertDialogFooter>
+        {/* <button className="rounded-md bg-black/40 p-2">Cancel</button> */}
+      </AlertDialogContent>
+    </AlertDialog>
   );
 }
