@@ -95,7 +95,7 @@ export function MintNFT({ handleSpin, spinning, connected }: MintNFTProps) {
               Cancel
             </AlertDialogCancel>
             <AlertDialogAction
-              className="text-md w-[100px] rounded-md bg-fuchsia-600 p-2 font-bold text-white hover:bg-fuchsia-800 disabled:cursor-not-allowed"
+              className="text-md rounded-md bg-fuchsia-600 p-2 font-bold text-white hover:bg-fuchsia-800 disabled:cursor-not-allowed md:w-[100px]"
               disabled={
                 !write1 ||
                 !write2 ||

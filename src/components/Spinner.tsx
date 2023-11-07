@@ -172,7 +172,7 @@ const Spinner: React.FC = () => {
       <div className="mb-10 h-48">
         {type && (
           <>
-            <h1 className="text-xl font-extrabold text-white">
+            <h1 className="text-lg font-extrabold text-white md:text-xl">
               You minted a {type} NFT!
             </h1>
             <div className="mt-2 text-lg text-white">
@@ -188,7 +188,9 @@ const Spinner: React.FC = () => {
                   alt="Ela.city"
                   className="rounded-full"
                 />
-                <p className="text-xl font-semibold">Trade it on Ela.city!</p>
+                <p className="text-lg font-semibold md:text-xl">
+                  Trade it on Ela.city!
+                </p>
               </Link>
             </div>
           </>
