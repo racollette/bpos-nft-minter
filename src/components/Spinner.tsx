@@ -4,11 +4,11 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useBlockNumber, useContractReads, useNetwork } from "wagmi";
 import { MintNFT } from "~/components/Mint";
-import { Profile } from "~/components/Profile";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 
 const OverlayNoSSR = dynamic(() => import("./Overlay"), { ssr: false });
+const ProfileNoSSR = dynamic(() => import("./Profile"), { ssr: false });
 
 const images = [
   "/images/NFT1_AuXPoW.png",
@@ -124,7 +124,7 @@ const Spinner: React.FC = () => {
       ref={containerRef}
     >
       <div className="flex flex-col justify-center gap-4 md:flex-row">
-        <Profile />
+        <ProfileNoSSR />
         <MintNFT
           handleSpin={handleSpin}
           spinning={spin}
