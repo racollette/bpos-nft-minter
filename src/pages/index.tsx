@@ -9,6 +9,7 @@ import {
   AccordionTrigger,
 } from "~/@/components/accordion";
 import Link from "next/link";
+import { Header } from "~/components/Header";
 
 export default function Home() {
   return (
@@ -24,6 +25,7 @@ export default function Home() {
           rel="stylesheet"
         />
       </Head>
+      <Header />
       <main className="relative flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
         {/* Hero Image */}
         <div className="hero-image absolute left-0 top-0 w-full brightness-[0.35]">
@@ -58,7 +60,7 @@ export default function Home() {
         </div>
 
         <div className="container relative z-10 flex flex-col items-center justify-center gap-8 px-4 pb-8 pt-16">
-          <h1 className="font-shadows flex flex-row gap-2 text-4xl font-extrabold tracking-tight text-white md:text-6xl">
+          <h1 className="flex flex-row gap-2 font-shadows text-4xl font-extrabold tracking-tight text-white md:text-6xl">
             Celebrating
             <span className="animate-bounce text-[hsl(280,100%,70%)]">
               Elastic
