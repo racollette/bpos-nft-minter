@@ -45,7 +45,7 @@ const Rewards = () => {
     (pow as number) > 0 && (pos as number) > 0 && (poi as number) > 0;
   const fullSets = Math.min(Number(pow), Number(pos), Number(poi));
 
-  const eligibleForPos = (pos as number) > 0;
+  const eligibleForPow = (pow as number) > 0;
 
   return (
     <section className="flex flex-col items-center justify-center gap-8">
@@ -64,7 +64,7 @@ const Rewards = () => {
             <span className="mr-4 rounded-md bg-black px-2 py-1 text-sm text-white">
               My Status
             </span>
-            {eligibleForPos ? (
+            {eligibleForPow ? (
               <span className="text-sm">Eligible (x{Number(pos)})</span>
             ) : (
               <span className="text-sm">Not Eligible</span>
