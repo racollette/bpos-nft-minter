@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useAccount, useContractRead } from "wagmi";
 import { abi } from "~/utils/contracts";
+import { nftType } from "~/utils/contracts";
 
 const Rewards = () => {
   const { address, connector: activeConnector, isConnected } = useAccount();
@@ -10,7 +11,7 @@ const Rewards = () => {
     // isError,
     // isLoading,
   } = useContractRead({
-    address: "0x7C8bD2A803D933557741965205f21F7088311468",
+    address: `0x${nftType[1].address}`,
     abi: abi,
     functionName: "balanceOf",
     args: [address],
@@ -21,7 +22,8 @@ const Rewards = () => {
     // isError,
     // isLoading,
   } = useContractRead({
-    address: "0xfE712eC85326bB9E54637896abf2a646CD081e39",
+    address: `0x${nftType[2].address}`,
+
     abi: abi,
     functionName: "balanceOf",
     args: [address],
@@ -32,7 +34,8 @@ const Rewards = () => {
     // isError,
     // isLoading,
   } = useContractRead({
-    address: "0xa30ae22b56dE03E94B3773F50089B0A2A557F955",
+    address: `0x${nftType[3].address}`,
+
     abi: abi,
     functionName: "balanceOf",
     args: [address],
@@ -44,7 +47,6 @@ const Rewards = () => {
 
   const eligibleForPos = (pos as number) > 0;
 
-  console.log(Number(pos));
   return (
     <section className="flex flex-col items-center justify-center gap-8">
       <div className="flex flex-col gap-2 text-center font-shadows text-3xl font-extrabold text-white">
@@ -83,13 +85,6 @@ const Rewards = () => {
               <span className="text-sm">Not Eligible</span>
             )}
           </h1>
-        </div>
-        <div className="p-2">
-          {eligibleForAll && (
-            <h1 className="text-lg font-bold text-fuchsia-600">
-              Congratulations! You own the full picture!
-            </h1>
-          )}
         </div>
       </div>
     </section>

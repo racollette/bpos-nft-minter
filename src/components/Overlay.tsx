@@ -1,5 +1,5 @@
 import React from "react";
-import { nftType } from "./Spinner";
+import { nftType } from "~/utils/contracts";
 
 type OverlayProps = {
   image: string;

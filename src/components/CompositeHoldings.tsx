@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useAccount, useContractRead } from "wagmi";
 import { abi } from "~/utils/contracts";
+import { nftType } from "~/utils/contracts";
 
 const CompositeHoldings = () => {
   const { address, connector: activeConnector, isConnected } = useAccount();
@@ -10,7 +11,7 @@ const CompositeHoldings = () => {
     // isError,
     // isLoading,
   } = useContractRead({
-    address: "0x7C8bD2A803D933557741965205f21F7088311468",
+    address: `0x${nftType[1].address}`,
     abi: abi,
     functionName: "balanceOf",
     args: [address],
@@ -21,7 +22,7 @@ const CompositeHoldings = () => {
     // isError,
     // isLoading,
   } = useContractRead({
-    address: "0xfE712eC85326bB9E54637896abf2a646CD081e39",
+    address: `0x${nftType[2].address}`,
     abi: abi,
     functionName: "balanceOf",
     args: [address],
@@ -32,11 +33,14 @@ const CompositeHoldings = () => {
     // isError,
     // isLoading,
   } = useContractRead({
-    address: "0xa30ae22b56dE03E94B3773F50089B0A2A557F955",
+    address: `0x${nftType[3].address}`,
     abi: abi,
     functionName: "balanceOf",
     args: [address],
   });
+
+  const eligibleForAll =
+    (pow as number) > 0 && (pos as number) > 0 && (poi as number) > 0;
 
   return (
     <section className="flex flex-col gap-8 p-4 md:container md:p-2">
@@ -62,7 +66,10 @@ const CompositeHoldings = () => {
                   fill
                   className="rounded-lg"
                 />
-                {linktoMarketplace("Trade")}
+                {linktoMarketplace(
+                  "Trade",
+                  "0xd74b885455899100dfca9991b33131556de9126b",
+                )}
               </>
             ) : (
               <>
@@ -72,7 +79,10 @@ const CompositeHoldings = () => {
                 >
                   Spin again!
                 </Link>
-                {linktoMarketplace("Buy")}
+                {linktoMarketplace(
+                  "Buy",
+                  "0xd74b885455899100dfca9991b33131556de9126b",
+                )}
               </>
             )}
           </div>
@@ -95,7 +105,10 @@ const CompositeHoldings = () => {
                   fill
                   className="rounded-lg"
                 />
-                {linktoMarketplace("Trade")}
+                {linktoMarketplace(
+                  "Trade",
+                  "0xaa8d84ed8c29e426fca211ba9e1b3a4f2175c235",
+                )}
               </>
             ) : (
               <>
@@ -105,7 +118,10 @@ const CompositeHoldings = () => {
                 >
                   Spin again!
                 </Link>
-                {linktoMarketplace("Buy")}
+                {linktoMarketplace(
+                  "Buy",
+                  "0xaa8d84ed8c29e426fca211ba9e1b3a4f2175c235",
+                )}
               </>
             )}
           </div>
@@ -130,7 +146,10 @@ const CompositeHoldings = () => {
                   fill
                   className="rounded-lg"
                 />
-                {linktoMarketplace("Trade")}
+                {linktoMarketplace(
+                  "Trade",
+                  "0x8403af710b871858f65e0ceac9c13d06a52c2bb2",
+                )}
               </>
             ) : (
               <>
@@ -140,20 +159,30 @@ const CompositeHoldings = () => {
                 >
                   Spin again!
                 </Link>
-                {linktoMarketplace("Buy")}
+                {linktoMarketplace(
+                  "Buy",
+                  "0x8403af710b871858f65e0ceac9c13d06a52c2bb2",
+                )}
               </>
             )}
           </div>
         </div>
       </div>
+      <div className="flex flex-row items-center justify-center p-2">
+        {eligibleForAll && (
+          <h1 className="text-lg font-bold text-fuchsia-600">
+            Congratulations! You own the full picture!
+          </h1>
+        )}
+      </div>
     </section>
   );
 };
 
-function linktoMarketplace(message: string) {
+function linktoMarketplace(message: string, collectionId: string) {
   return (
     <Link
-      href="https://ela.city/"
+      href={`https://ela.city/marketplace/collections/${collectionId}`}
       target="_blank"
       className="z-20 flex flex-row items-center justify-center gap-2 rounded-lg bg-emerald-600/80 px-3 py-2 hover:bg-emerald-500/80"
     >

@@ -1,6 +1,5 @@
 import { parseEther } from "ethers";
 import { useContractWrite, usePrepareContractWrite } from "wagmi";
-import { nftType } from "~/components/Spinner";
 
 // export const abi = [
 //   {
@@ -671,13 +670,37 @@ export const abi = [
   },
 ];
 
+export const nftType = {
+  1: {
+    title: "Proof of Work",
+    details: "Earn $GLIDE",
+    ipfs: "QmRnsd2KQpNYsspjnA2F9qAdicMcuzrZMzSCMupCge4mkf",
+    address: "D74B885455899100DFCa9991B33131556de9126b", // "7C8bD2A803D933557741965205f21F7088311468",
+    translation: 11900,
+  },
+  2: {
+    title: "Proof of Stake",
+    details: "50% discount on Elasafe (Elastos node service provider)",
+    ipfs: "Qmem84KjqcQsgNTnDaxTdngc1hJ4me6TBS2U4VZHdw4pMK",
+    address: "AA8D84Ed8c29e426Fca211Ba9E1b3A4f2175C235", // "fE712eC85326bB9E54637896abf2a646CD081e39",
+    translation: 14155,
+  },
+  3: {
+    title: "Proof of Integrity",
+    details: "20% discount using Elacity Flint’s generative AI tools",
+    ipfs: "QmYfxHFQoBsHbZs2KHBdLYLCd5SerBqMEEaiX7GmictT7R",
+    address: "8403Af710B871858f65E0ceAc9c13d06A52C2bB2", //"a30ae22b56dE03E94B3773F50089B0A2A557F955",
+    translation: 15580,
+  },
+};
+
 export const usePreparedContracts = () => {
   const { config: config1 } = usePrepareContractWrite({
     address: `0x${nftType[1].address}`,
     abi: abi,
     functionName: "mintNFT",
     args: [`https://gateway.pinata.cloud/ipfs/${nftType[1].ipfs}`],
-    value: parseEther("0.02"),
+    value: parseEther("20"),
   });
 
   const { config: config2 } = usePrepareContractWrite({
@@ -685,7 +708,7 @@ export const usePreparedContracts = () => {
     abi: abi,
     functionName: "mintNFT",
     args: [`https://gateway.pinata.cloud/ipfs/${nftType[2].ipfs}`],
-    value: parseEther("0.02"),
+    value: parseEther("20"),
   });
 
   const { config: config3 } = usePrepareContractWrite({
@@ -693,7 +716,7 @@ export const usePreparedContracts = () => {
     abi: abi,
     functionName: "mintNFT",
     args: [`https://gateway.pinata.cloud/ipfs/${nftType[3].ipfs}`],
-    value: parseEther("0.02"),
+    value: parseEther("20"),
   });
 
   const {

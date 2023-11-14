@@ -6,6 +6,7 @@ import { useBlockNumber, useContractReads, useNetwork } from "wagmi";
 import { MintNFT } from "~/components/Mint";
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import { nftType } from "~/utils/contracts";
 
 const OverlayNoSSR = dynamic(() => import("./Overlay"), { ssr: false });
 const ProfileNoSSR = dynamic(() => import("./Profile"), { ssr: false });
@@ -22,30 +23,6 @@ const spinnerImages = Array.from(
   { length: images.length * repetitions },
   () => [...images],
 ).flat();
-
-export const nftType = {
-  1: {
-    title: "Proof of Work",
-    details: "Earn $GLIDE",
-    ipfs: "QmRnsd2KQpNYsspjnA2F9qAdicMcuzrZMzSCMupCge4mkf",
-    address: "7C8bD2A803D933557741965205f21F7088311468",
-    translation: 11900,
-  },
-  2: {
-    title: "Proof of Stake",
-    details: "50% discount on Elasafe (Elastos node service provider)",
-    ipfs: "Qmem84KjqcQsgNTnDaxTdngc1hJ4me6TBS2U4VZHdw4pMK",
-    address: "fE712eC85326bB9E54637896abf2a646CD081e39",
-    translation: 14155,
-  },
-  3: {
-    title: "Proof of Integrity",
-    details: "20% discount using Elacity Flint’s generative AI tools",
-    ipfs: "QmYfxHFQoBsHbZs2KHBdLYLCd5SerBqMEEaiX7GmictT7R",
-    address: "a30ae22b56dE03E94B3773F50089B0A2A557F955",
-    translation: 15580,
-  },
-};
 
 const Spinner: React.FC = () => {
   const { chain } = useNetwork();
@@ -100,8 +77,6 @@ const Spinner: React.FC = () => {
       },
     ],
   });
-
-  console.log(mintedData);
 
   const handleSpin = (randomNumber: 1 | 2 | 3) => {
     // spinnerRef.current?.style.setProperty("transform", `translateX(-100px)`);

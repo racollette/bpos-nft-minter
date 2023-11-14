@@ -19,7 +19,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "~/@/components/alert-dialog";
-import { check } from "prettier";
 
 type MintNFTProps = {
   handleSpin: (randomNumber: 1 | 2 | 3) => void;
@@ -75,18 +74,18 @@ export function MintNFT({
 
   const checkMintStatus = (randomNumber: number) => {
     if (randomNumber === 1) {
-      return mintedData?.[0] && (mintedData?.[0].result as number) >= 20;
+      return mintedData?.[0] && (mintedData?.[0].result as number) >= 88;
     }
     if (randomNumber === 2) {
-      return mintedData?.[1] && (mintedData?.[1].result as number) >= 20;
+      return mintedData?.[1] && (mintedData?.[1].result as number) >= 88;
     }
-    return mintedData?.[2] && (mintedData?.[2].result as number) >= 20;
+    return mintedData?.[2] && (mintedData?.[2].result as number) >= 88;
   };
 
   const handleMintClick = () => {
     const newRandomNumber = Math.ceil(Math.random() * 3) as 1 | 2 | 3;
     if (checkMintStatus(newRandomNumber)) {
-      alert("This NFTs has been fully minted! Try again!");
+      alert("This NFT has been fully minted! Try again!");
       return;
     }
     setRandomNumber(newRandomNumber);
