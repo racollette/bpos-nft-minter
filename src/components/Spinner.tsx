@@ -59,23 +59,6 @@ const Spinner: React.FC = () => {
 
   // const { data, isError, isLoading } = useBlockNumber();
 
-  const handleSpin = (randomNumber: 1 | 2 | 3) => {
-    // spinnerRef.current?.style.setProperty("transform", `translateX(-100px)`);
-    setType("");
-    setSpinState(randomNumber);
-    setSpin(true);
-
-    spinnerRef.current?.style.setProperty(
-      "transform",
-      `translateX(-${nftType[randomNumber].translation}px)`,
-    );
-
-    setTimeout(() => {
-      setSpin(false);
-      setType(nftType[randomNumber].title);
-    }, spinDuration);
-  };
-
   const mintedCountABI = [
     {
       type: "function",
@@ -118,6 +101,25 @@ const Spinner: React.FC = () => {
     ],
   });
 
+  console.log(mintedData);
+
+  const handleSpin = (randomNumber: 1 | 2 | 3) => {
+    // spinnerRef.current?.style.setProperty("transform", `translateX(-100px)`);
+    setType("");
+    setSpinState(randomNumber);
+    setSpin(true);
+
+    spinnerRef.current?.style.setProperty(
+      "transform",
+      `translateX(-${nftType[randomNumber].translation}px)`,
+    );
+
+    setTimeout(() => {
+      setSpin(false);
+      setType(nftType[randomNumber].title);
+    }, spinDuration);
+  };
+
   return (
     <div
       className="flex h-[625px] w-full flex-col items-center gap-8 overflow-hidden md:w-4/5"
@@ -129,6 +131,7 @@ const Spinner: React.FC = () => {
           handleSpin={handleSpin}
           spinning={spin}
           connected={(chain && chain.id === 20) ?? false}
+          mintedData={mintedData}
         />
       </div>
 
@@ -172,25 +175,15 @@ const Spinner: React.FC = () => {
       <div className="mb-10 h-48">
         {type && (
           <>
-            <h1 className="text-lg font-extrabold text-white md:text-xl">
+            <h1 className="mb-4 text-lg font-extrabold text-white md:text-xl">
               You minted a {type} NFT!
             </h1>
             <div className="mt-2 text-lg text-white">
               <Link
-                href="https://ela.city/"
-                target="_blank"
-                className="flex flex-row items-center justify-center gap-4 rounded-2xl bg-emerald-500 py-2 hover:bg-emerald-400"
+                href="/dashboard"
+                className="flex flex-row items-center justify-center gap-4 rounded-lg bg-fuchsia-600 py-2 hover:bg-fuchsia-700"
               >
-                <Image
-                  src="/images/elacity.jpg"
-                  width={50}
-                  height={50}
-                  alt="Ela.city"
-                  className="rounded-full"
-                />
-                <p className="text-lg font-semibold md:text-xl">
-                  Trade it on Ela.city!
-                </p>
+                <p className="text-md font-semibold">View on the dashboard!</p>
               </Link>
             </div>
           </>
