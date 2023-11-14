@@ -19,14 +19,36 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "~/@/components/alert-dialog";
+import { check } from "prettier";
 
 type MintNFTProps = {
   handleSpin: (randomNumber: 1 | 2 | 3) => void;
   spinning: boolean;
   connected: boolean;
+  mintedData: MintedData;
 };
 
-export function MintNFT({ handleSpin, spinning, connected }: MintNFTProps) {
+type MintedData =
+  | (
+      | {
+          error: Error;
+          result?: undefined;
+          status: "failure";
+        }
+      | {
+          error?: undefined;
+          result: unknown;
+          status: "success";
+        }
+    )[]
+  | undefined;
+
+export function MintNFT({
+  handleSpin,
+  spinning,
+  connected,
+  mintedData,
+}: MintNFTProps) {
   const [randomNumber, setRandomNumber] = useState<1 | 2 | 3>(1);
 
   const { write1, data1, write2, data2, write3, data3 } =
@@ -51,8 +73,22 @@ export function MintNFT({ handleSpin, spinning, connected }: MintNFTProps) {
     }
   }, [isSuccess, handleSpin, randomNumber]);
 
+  const checkMintStatus = (randomNumber: number) => {
+    if (randomNumber === 1) {
+      return mintedData?.[0] && (mintedData?.[0].result as number) >= 20;
+    }
+    if (randomNumber === 2) {
+      return mintedData?.[1] && (mintedData?.[1].result as number) >= 20;
+    }
+    return mintedData?.[2] && (mintedData?.[2].result as number) >= 20;
+  };
+
   const handleMintClick = () => {
     const newRandomNumber = Math.ceil(Math.random() * 3) as 1 | 2 | 3;
+    if (checkMintStatus(newRandomNumber)) {
+      alert("This NFTs has been fully minted! Try again!");
+      return;
+    }
     setRandomNumber(newRandomNumber);
 
     if (isLoading || spinning || !connected) return;
