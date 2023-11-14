@@ -31,7 +31,7 @@ export default function Dashboard() {
         />
       </Head>
       <Header />
-      <main className="relative flex min-h-screen flex-col gap-12 bg-gradient-to-b from-[#2e026d] to-[#15162c] pt-12 text-white">
+      <main className="relative flex min-h-screen flex-col gap-12 bg-gradient-to-b from-[#2e026d] to-[#15162c] pb-20 pt-12 text-white">
         <CompositeHoldingsNoSSR />
         <RewardsNoSSR />
       </main>
