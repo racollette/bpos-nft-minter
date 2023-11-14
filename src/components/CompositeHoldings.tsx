@@ -66,10 +66,7 @@ const CompositeHoldings = () => {
                   fill
                   className="rounded-lg"
                 />
-                {linktoMarketplace(
-                  "Trade",
-                  "0xd74b885455899100dfca9991b33131556de9126b",
-                )}
+                {linktoMarketplace("Trade", `0x${nftType[1].address}}`)}
               </>
             ) : (
               <>
@@ -79,10 +76,7 @@ const CompositeHoldings = () => {
                 >
                   Spin again!
                 </Link>
-                {linktoMarketplace(
-                  "Buy",
-                  "0xd74b885455899100dfca9991b33131556de9126b",
-                )}
+                {linktoMarketplace("Buy", `0x${nftType[1].address}}`)}
               </>
             )}
           </div>
@@ -105,10 +99,7 @@ const CompositeHoldings = () => {
                   fill
                   className="rounded-lg"
                 />
-                {linktoMarketplace(
-                  "Trade",
-                  "0xaa8d84ed8c29e426fca211ba9e1b3a4f2175c235",
-                )}
+                {linktoMarketplace("Trade", `0x${nftType[2].address}}`)}
               </>
             ) : (
               <>
@@ -118,10 +109,7 @@ const CompositeHoldings = () => {
                 >
                   Spin again!
                 </Link>
-                {linktoMarketplace(
-                  "Buy",
-                  "0xaa8d84ed8c29e426fca211ba9e1b3a4f2175c235",
-                )}
+                {linktoMarketplace("Buy", `0x${nftType[2].address}}`)}
               </>
             )}
           </div>
@@ -146,10 +134,7 @@ const CompositeHoldings = () => {
                   fill
                   className="rounded-lg"
                 />
-                {linktoMarketplace(
-                  "Trade",
-                  "0x8403af710b871858f65e0ceac9c13d06a52c2bb2",
-                )}
+                {linktoMarketplace("Trade", `0x${nftType[3].address}}`)}
               </>
             ) : (
               <>
@@ -159,10 +144,7 @@ const CompositeHoldings = () => {
                 >
                   Spin again!
                 </Link>
-                {linktoMarketplace(
-                  "Buy",
-                  "0x8403af710b871858f65e0ceac9c13d06a52c2bb2",
-                )}
+                {linktoMarketplace("Buy", `0x${nftType[3].address}}`)}
               </>
             )}
           </div>
