@@ -13,13 +13,20 @@ import {
 import Image from "next/image";
 import { HiExclamationCircle } from "react-icons/hi";
 
-export default function Profile() {
+type ProfileProps = {
+  size?: string;
+};
+
+export default function Profile({ size = "md" }: ProfileProps) {
   const { address, connector: activeConnector, isConnected } = useAccount();
   const { connect, connectors, error, isLoading, pendingConnector } =
     useConnect();
   const { disconnect } = useDisconnect();
   const { chain } = useNetwork();
   const { switchNetwork } = useSwitchNetwork();
+
+  const buttonWidth = size === "md" ? `w-[200px]` : `w-[150px]`;
+  const buttonPadding = size === "md" ? `p-2` : `p-1`;
 
   return (
     <div suppressHydrationWarning={true}>
@@ -28,7 +35,7 @@ export default function Profile() {
           {chain && chain.id !== 20 ? (
             <div className="flex flex-row items-center justify-center gap-2">
               <button
-                className="flex w-[200px] flex-row flex-nowrap items-center justify-center gap-2 rounded-md bg-pink-600 p-2 text-xs font-bold text-white hover:bg-pink-700"
+                className={`flex ${buttonWidth} flex-row flex-nowrap items-center justify-center gap-2 rounded-md bg-pink-600 ${buttonPadding} text-xs font-bold text-white hover:bg-pink-700`}
                 onClick={() => switchNetwork?.(20)}
               >
                 <HiExclamationCircle size={24} />
@@ -38,7 +45,7 @@ export default function Profile() {
           ) : (
             <div className="flex flex-row items-center justify-center gap-2">
               <button
-                className="flex w-[200px] flex-row items-center justify-center gap-2 rounded-md bg-sky-400 p-2 font-bold text-white hover:bg-sky-500"
+                className={`flex ${buttonWidth} flex-row items-center justify-center gap-2 rounded-md bg-sky-400 ${buttonPadding} font-bold text-white hover:bg-sky-500`}
                 onClick={() => disconnect()}
               >
                 <div className="text-white">{address?.slice(0, 8)}</div>
@@ -50,7 +57,9 @@ export default function Profile() {
       ) : (
         <div className="flex flex-row items-center justify-center gap-2">
           <Dialog>
-            <DialogTrigger className="flex w-[200px] items-center justify-center rounded-md bg-sky-400 p-2 font-bold text-white hover:bg-sky-500">
+            <DialogTrigger
+              className={`flex ${buttonWidth} items-center justify-center rounded-md bg-sky-400 ${buttonPadding} font-bold text-white hover:bg-sky-500`}
+            >
               Connect Wallet
             </DialogTrigger>
             <DialogContent className="mx-4 w-5/6 border-none bg-indigo-800/60">
@@ -62,7 +71,7 @@ export default function Profile() {
               <div className="flex flex-col gap-4 text-white md:flex-row">
                 {connectors.map((connector) => (
                   <button
-                    className="flex flex-row items-center justify-center gap-2 rounded-md bg-indigo-900 p-2 text-sm font-extrabold"
+                    className={`flex flex-row items-center justify-center gap-2 rounded-md bg-indigo-900 ${buttonPadding} text-sm font-extrabold`}
                     disabled={!connector.ready}
                     key={connector.id}
                     onClick={() => connect({ connector })}
