@@ -38,28 +38,37 @@ const CompositeHoldings = () => {
     args: [address],
   });
 
-  console.log(Number(pos));
   return (
-    <section className="container flex flex-col gap-8">
-      <div className="text-center font-shadows text-3xl font-extrabold text-white">
+    <section className="flex flex-col gap-8 p-4 md:container md:p-2">
+      <div className="text-center font-shadows text-xl font-extrabold text-white md:text-3xl">
         My NFTs
       </div>
-      <div className="grid grid-cols-3 gap-4 font-bold text-white">
-        <div className="relative flex aspect-square items-center justify-center border-2 border-pink-500 bg-black/50">
-          <p className="absolute -bottom-5 z-10 rounded-lg border-2 border-pink-500 bg-black px-2 py-1">
+      <div className="flex flex-col gap-8 font-bold text-white md:grid md:grid-cols-3 md:gap-3">
+        <div className="relative flex aspect-square items-center justify-center rounded-lg border-2 border-fuchsia-600 bg-black/50">
+          <p className="absolute -bottom-5 z-10 rounded-lg border-2 border-fuchsia-600 bg-black px-2 py-1 text-lg">
             Proof of Work
           </p>
           <div className="flex flex-col gap-2">
             {Number(pow) > 0 ? (
               <>
-                <Image src="/images/NFT1_PoW.png" alt="PoW NFT" fill />
+                {Number(pow) > 1 && (
+                  <h1 className="z-20 rounded-lg bg-black/60 text-center text-lg font-extrabold text-white md:text-2xl">
+                    You own {Number(pow)}!
+                  </h1>
+                )}
+                <Image
+                  src="/images/NFT1_AuXPoW.png"
+                  alt="PoW NFT"
+                  fill
+                  className="rounded-lg"
+                />
                 {linktoMarketplace("Trade")}
               </>
             ) : (
               <>
                 <Link
                   href="/"
-                  className="z-10 rounded-lg bg-cyan-600 px-3 py-2 text-center hover:bg-cyan-500"
+                  className="z-10 rounded-lg bg-cyan-600 px-3 py-2 text-center text-sm hover:bg-cyan-500 md:text-lg"
                 >
                   Spin again!
                 </Link>
@@ -68,21 +77,31 @@ const CompositeHoldings = () => {
             )}
           </div>
         </div>
-        <div className="relative flex aspect-square items-center justify-center border-2 border-pink-500 bg-black/50">
-          <p className="absolute -bottom-5 z-10 rounded-lg border-2 border-pink-500 bg-black px-2 py-1">
+        <div className="relative flex aspect-square items-center justify-center rounded-lg border-2 border-fuchsia-600 bg-black/50">
+          <p className="absolute -bottom-5 z-20 rounded-lg border-2 border-fuchsia-600 bg-black px-2 py-1 text-lg">
             Bonded Proof of Stake
           </p>
           <div className="flex flex-col gap-2">
             {Number(pos) > 0 ? (
               <>
-                <Image src="/images/NFT2_BPoS.png" alt="BPoS NFT" fill />
+                {Number(pos) > 1 && (
+                  <h1 className="z-20 rounded-lg bg-black/60 text-center text-lg font-extrabold text-white md:text-2xl">
+                    You own {Number(pos)}!
+                  </h1>
+                )}
+                <Image
+                  src="/images/NFT2_BPoS.png"
+                  alt="BPoS NFT"
+                  fill
+                  className="rounded-lg"
+                />
                 {linktoMarketplace("Trade")}
               </>
             ) : (
               <>
                 <Link
                   href="/"
-                  className="z-10 rounded-lg bg-cyan-600 px-3 py-2 text-center hover:bg-cyan-500"
+                  className="z-10 rounded-lg bg-cyan-600 px-3 py-2 text-center text-sm hover:bg-cyan-500 md:text-lg"
                 >
                   Spin again!
                 </Link>
@@ -91,22 +110,33 @@ const CompositeHoldings = () => {
             )}
           </div>
         </div>
-        <div className="relative flex aspect-square items-center justify-center border-2 border-pink-500 bg-black/50">
-          <p className="absolute -bottom-5 z-10 rounded-lg border-2 border-pink-500 bg-black px-2 py-1">
+        <div className="relative flex aspect-square items-center justify-center rounded-lg border-2 border-fuchsia-600 bg-black/50">
+          <p className="absolute -bottom-5 z-10 rounded-lg border-2 border-fuchsia-600 bg-black px-2 py-1 text-lg">
             Proof of Integrity
           </p>
 
           <div className="flex flex-col gap-2">
             {Number(poi) > 0 ? (
               <>
-                <Image src="/images/NFT3_PoI.png" alt="PoI NFT" fill />
+                {Number(poi) > 1 && (
+                  <h1 className="z-20 rounded-lg bg-black/60 text-center text-lg font-extrabold text-white md:text-2xl">
+                    You own {Number(poi)}!
+                  </h1>
+                )}
+
+                <Image
+                  src="/images/NFT3_PoI.png"
+                  alt="PoI NFT"
+                  fill
+                  className="rounded-lg"
+                />
                 {linktoMarketplace("Trade")}
               </>
             ) : (
               <>
                 <Link
                   href="/"
-                  className="z-10 rounded-lg bg-cyan-600 px-3 py-2 text-center hover:bg-cyan-500"
+                  className="z-10 rounded-lg bg-cyan-600 px-3 py-2 text-center text-sm hover:bg-cyan-500 md:text-lg"
                 >
                   Spin again!
                 </Link>
@@ -125,7 +155,7 @@ function linktoMarketplace(message: string) {
     <Link
       href="https://ela.city/"
       target="_blank"
-      className="z-20 flex flex-row items-center justify-center gap-2 rounded-lg bg-emerald-600 px-3 py-2 hover:bg-emerald-500"
+      className="z-20 flex flex-row items-center justify-center gap-2 rounded-lg bg-emerald-600/80 px-3 py-2 hover:bg-emerald-500/80"
     >
       <Image
         src="/images/elacity.jpg"
@@ -134,7 +164,7 @@ function linktoMarketplace(message: string) {
         alt="Ela.city"
         className="rounded-full"
       />
-      <p className="text-sm font-semibold">{message} on ela.city</p>
+      <p className="text-xs font-semibold md:text-sm">{message} on ela.city</p>
     </Link>
   );
 }
