@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Profile from "./Profile";
+import { ProfileNoSSR } from "./Spinner";
 
 export const Header = () => {
   return (
@@ -16,7 +16,7 @@ export const Header = () => {
         </Link>
       </div>
       <div className="justify-self-end">
-        <Profile size="sm" />
+        <ProfileNoSSR size="sm" />
       </div>
     </div>
   );
