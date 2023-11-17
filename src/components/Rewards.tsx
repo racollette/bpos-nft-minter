@@ -108,7 +108,9 @@ function ClaimWidget({
   claimFunction,
   isLoading,
 }: ClaimWidgetProps) {
-  const rewardsInEther = ethers.formatEther(rewards as BigNumberish);
+  const rewardsInEther = rewards
+    ? ethers.formatEther(rewards as BigNumberish)
+    : 0;
 
   return (
     <div className="flex w-full flex-row items-center justify-between px-4 py-2">
