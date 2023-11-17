@@ -7,9 +7,9 @@ import {
 } from "wagmi";
 
 export const powRewardsContractAddress =
-  "0xc1FC9d45CAC69F6376cC37e3A4D27Ca4BaF412Ee";
+  "0xb7c9aE38E192fe539f977C5E09eD582302655FA0";
 export const ecRewardsContractAddress =
-  "0x903C59DE07E0963C925c05A5D1EB247F39e5918b";
+  "0x5bA1d17B78c4146cDc21d33d16A4cFa439b0C6cB";
 
 export const rewardsAbi = [
   {
