@@ -6,7 +6,7 @@ import {
   useWaitForTransaction,
   // useAccount,
 } from "wagmi";
-import { usePreparedContracts } from "~/utils/contracts";
+import { useMintNFT } from "~/utils/contracts";
 import { HiRefresh } from "react-icons/hi";
 import {
   AlertDialog,
@@ -50,8 +50,7 @@ export function MintNFT({
 }: MintNFTProps) {
   const [randomNumber, setRandomNumber] = useState<1 | 2 | 3>(1);
 
-  const { write1, data1, write2, data2, write3, data3 } =
-    usePreparedContracts();
+  const { write1, data1, write2, data2, write3, data3 } = useMintNFT();
 
   const { isLoading, isSuccess } = useWaitForTransaction({
     hash:
