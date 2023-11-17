@@ -1,10 +1,6 @@
 /* eslint-disable @next/next/no-page-custom-font */
 import Head from "next/head";
-import Image from "next/image";
-import Link from "next/link";
-import { useAccount, useContractRead } from "wagmi";
 import { Header } from "~/components/Header";
-import { abi } from "~/utils/contracts";
 import dynamic from "next/dynamic";
 
 const CompositeHoldingsNoSSR = dynamic(

@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import Image from "next/image";
-import { useBlockNumber, useContractReads, useNetwork } from "wagmi";
+import { useContractReads, useNetwork } from "wagmi";
 import { MintNFT } from "~/components/Mint";
 import dynamic from "next/dynamic";
 import Link from "next/link";
