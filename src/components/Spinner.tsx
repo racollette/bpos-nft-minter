@@ -9,7 +9,7 @@ import Link from "next/link";
 import { nftType } from "~/utils/contracts";
 
 const OverlayNoSSR = dynamic(() => import("./Overlay"), { ssr: false });
-const ProfileNoSSR = dynamic(() => import("./Profile"), { ssr: false });
+export const ProfileNoSSR = dynamic(() => import("./Profile"), { ssr: false });
 
 const images = [
   "/images/NFT1_AuXPoW.png",
