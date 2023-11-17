@@ -1,28 +1,354 @@
 import { parseEther } from "ethers";
-import { useContractWrite, usePrepareContractWrite } from "wagmi";
+import {
+  useAccount,
+  useContractRead,
+  useContractWrite,
+  usePrepareContractWrite,
+} from "wagmi";
 
-// export const abi = [
-//   {
-//     name: "mintNFT",
-//     type: "function",
-//     stateMutability: "payable",
-//     inputs: [
-//       {
-//         internalType: "string",
-//         name: "tokenURI",
-//         type: "string",
-//       },
-//     ],
-//     outputs: [
-//       {
-//         internalType: "uint256",
-//         name: "",
-//         type: "uint256",
-//       },
-//     ],
-//   },
-// ];
+export const powRewardsContractAddress =
+  "0xc1FC9d45CAC69F6376cC37e3A4D27Ca4BaF412Ee";
+export const ecRewardsContractAddress =
+  "0x903C59DE07E0963C925c05A5D1EB247F39e5918b";
 
+export const rewardsAbi = [
+  {
+    inputs: [
+      {
+        internalType: "contract IERC20",
+        name: "_token",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "_startBlock",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "initialOwner",
+        type: "address",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "target",
+        type: "address",
+      },
+    ],
+    name: "AddressEmptyCode",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+    ],
+    name: "AddressInsufficientBalance",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "FailedInnerCall",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+    ],
+    name: "OwnableInvalidOwner",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+    ],
+    name: "OwnableUnauthorizedAccount",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "ReentrancyGuardReentrantCall",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "token",
+        type: "address",
+      },
+    ],
+    name: "SafeERC20FailedOperation",
+    type: "error",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "block",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "AddTokenReward",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "previousOwner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "OwnershipTransferred",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "token",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "RescueToken",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "block",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "WithdrawTokenRewards",
+    type: "event",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_user",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "_amount",
+        type: "uint256",
+      },
+    ],
+    name: "addTokenReward",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address[]",
+        name: "_users",
+        type: "address[]",
+      },
+      {
+        internalType: "uint256[]",
+        name: "_amounts",
+        type: "uint256[]",
+      },
+    ],
+    name: "addTokenRewards",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "lastUpdatedBlock",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "renounceOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "rewardToken",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "addressForReceive",
+        type: "address",
+      },
+    ],
+    name: "rescueToken",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "rewards",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_lastUpdatedBlock",
+        type: "uint256",
+      },
+    ],
+    name: "setLastUpdateBlock",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "token",
+    outputs: [
+      {
+        internalType: "contract IERC20",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "withdrawTokenRewards",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    stateMutability: "payable",
+    type: "receive",
+  },
+];
 export const abi = [
   {
     inputs: [
@@ -694,7 +1020,7 @@ export const nftType = {
   },
 };
 
-export const usePreparedContracts = () => {
+export const useMintNFT = () => {
   const { config: config1 } = usePrepareContractWrite({
     address: `0x${nftType[1].address}`,
     abi: abi,
@@ -719,16 +1045,84 @@ export const usePreparedContracts = () => {
     value: parseEther("20"),
   });
 
-  const {
-    data: data1,
-    error,
-    isError,
-    write: write1,
-  } = useContractWrite(config1);
+  const { data: data1, write: write1 } = useContractWrite(config1);
 
   const { data: data2, write: write2 } = useContractWrite(config2);
 
   const { data: data3, write: write3 } = useContractWrite(config3);
 
   return { write1, data1, write2, data2, write3, data3 };
+};
+
+export const useClaimRewards = () => {
+  const { config: powConfig } = usePrepareContractWrite({
+    address: powRewardsContractAddress,
+    abi: rewardsAbi,
+    functionName: "withdrawTokenRewards",
+  });
+
+  const { config: ecConfig } = usePrepareContractWrite({
+    address: ecRewardsContractAddress,
+    abi: rewardsAbi,
+    functionName: "withdrawTokenRewards",
+  });
+
+  const {
+    data: powData,
+    write: powWrite,
+    isLoading: powIsLoading,
+  } = useContractWrite(powConfig);
+
+  const {
+    data: ecData,
+    write: ecWrite,
+    isLoading: ecIsLoading,
+  } = useContractWrite(ecConfig);
+
+  return { powWrite, powData, ecWrite, ecData, powIsLoading, ecIsLoading };
+};
+
+export const useRewards = () => {
+  const { address } = useAccount();
+
+  const { data: pow } = useContractRead({
+    address: `0x${nftType[1].address}`,
+    abi: abi,
+    functionName: "balanceOf",
+    args: [address],
+  });
+
+  const { data: pos } = useContractRead({
+    address: `0x${nftType[2].address}`,
+
+    abi: abi,
+    functionName: "balanceOf",
+    args: [address],
+  });
+
+  const { data: poi } = useContractRead({
+    address: `0x${nftType[3].address}`,
+
+    abi: abi,
+    functionName: "balanceOf",
+    args: [address],
+  });
+
+  const { data: powRewards } = useContractRead({
+    address: powRewardsContractAddress,
+    abi: rewardsAbi,
+    functionName: "rewards",
+    args: [address],
+    watch: true,
+  });
+
+  const { data: ecRewards } = useContractRead({
+    address: ecRewardsContractAddress,
+    abi: rewardsAbi,
+    functionName: "rewards",
+    args: [address],
+    watch: true,
+  });
+
+  return { pow, pos, poi, powRewards, ecRewards };
 };
