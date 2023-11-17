@@ -57,7 +57,7 @@ const Rewards = () => {
               </div>
             </div>
             <ClaimWidget
-              rewards={powRewards as BigNumberish}
+              rewards={powRewards}
               token="GLIDE"
               claimFunction={powWrite}
               isLoading={powIsLoading}
@@ -83,7 +83,7 @@ const Rewards = () => {
               </div>
             </div>
             <ClaimWidget
-              rewards={ecRewards as BigNumberish}
+              rewards={ecRewards}
               token="WELA"
               claimFunction={ecWrite}
               isLoading={ecIsLoading}
@@ -96,7 +96,7 @@ const Rewards = () => {
 };
 
 type ClaimWidgetProps = {
-  rewards: BigNumberish;
+  rewards: unknown;
   token: string;
   claimFunction: (() => void) | undefined;
   isLoading: boolean;
@@ -108,7 +108,7 @@ function ClaimWidget({
   claimFunction,
   isLoading,
 }: ClaimWidgetProps) {
-  const rewardsInEther = ethers.formatEther(rewards);
+  const rewardsInEther = ethers.formatEther(rewards as BigNumberish);
 
   return (
     <div className="flex w-full flex-row items-center justify-between px-4 py-2">
