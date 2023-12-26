@@ -10,8 +10,8 @@ export const elastos = {
     symbol: "ELA",
   },
   rpcUrls: {
-    public: { http: ["https://rpc.glidefinance.io"] },
-    default: { http: ["https://rpc.glidefinance.io"] },
+    public: { http: ["https://api.elastos.io/esc"] },
+    default: { http: ["https://api.elastos.io/esc"] },
   },
   blockExplorers: {
     etherscan: { name: "ESC Block Explorer", url: "https://esc.elastos.io" },
